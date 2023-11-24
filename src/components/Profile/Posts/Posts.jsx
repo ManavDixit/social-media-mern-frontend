@@ -1,15 +1,25 @@
 import React from 'react'
 import './Posts.css';
-import Post from '../../Post/Post'
+import Post from '../../Post/Post';
+import { useNavigate ,createSearchParams} from 'react-router-dom';
+
 const Posts = ({posts}) => {
-  console.log(posts)
+  const navigate=useNavigate();
+  const handleClickOnPost=(postid)=>{
+    navigate({
+      pathname: "/postinfo",
+      search: createSearchParams({
+          postid
+      }).toString()
+    })
+    }
   return (
     <div className='profile-postscontainer'>
       <h2>Posts:</h2>
 {
 
       posts.map((post)=>
-          <Post key={post._id}title={post.title}
+          <Post onClick={()=>{handleClickOnPost(post._id)}} key={post._id}title={post.title}
           description={post.description}
           likeCount={5}
           postimg={post.image}
