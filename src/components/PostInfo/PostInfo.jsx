@@ -23,11 +23,11 @@ const PostInfo = () => {
     const {comments,isPrevAvialble,isNextAvailable}=await getComments({dispatch,post_id:postid,page});
    
     if(page>1){
-      dispatch(setComments({isNextAvailable,isPrevAvialble,comments:[...(postInfo.comments.comments),...comments]}))
+      return ({isNextAvailable,isPrevAvialble,comments:[...(postInfo.comments.comments),...comments]})
    
     }
     else{
-      dispatch(setComments({isNextAvailable,isPrevAvialble,comments:[...comments]}))
+      return({isNextAvailable,isPrevAvialble,comments:[...comments]})
       
     }
   }
@@ -42,14 +42,15 @@ const PostInfo = () => {
      const setPostData=async()=>{
       dispatch(setLoading(true));
       const data=await getPostInfo({navigate,postid,dispatch,signal});
-      dispatch(setPostinfo({...data,comments:{comments:[],isNextAvailable:false,isPrevAvialble:false}}));
+       //getting comments 
+
+      const comments=await getCommentsData(1);
+      dispatch(setPostinfo({...data,comments}));
       dispatch(setLoading(false));
      }
      setPostData();
 
-     //getting comments 
-
-      getCommentsData(1);
+    
     
     }
     return ()=>{
@@ -66,7 +67,7 @@ const PostInfo = () => {
           
           <div id='postbox'>
 
-          <Post key={PostInfo._id}
+          <Post key={postInfo._id}
             title={postInfo.title}
             description={postInfo.description}
             likeCount={5}

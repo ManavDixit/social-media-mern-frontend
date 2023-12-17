@@ -74,6 +74,7 @@ const Comments = ({ getCommentsData }) => {
                   hasLiked={comment.hasLiked}
                   postid={postid}
                   commentid={comment._id}
+                  email={comment.email}
                 />
               );
             } else {
@@ -85,6 +86,7 @@ const Comments = ({ getCommentsData }) => {
                   hasLiked={comment.hasLiked}
                   postid={postid}
                   commentid={comment._id}
+                  email={comment.email}
                 />
               );
             }

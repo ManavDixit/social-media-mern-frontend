@@ -4,6 +4,15 @@
     margin: auto;
     max-height: 92dvh;
 }
+.comments .userInfo a{
+    cursor: pointer;
+    display: inline;
+    text-decoration: none;
+    color: black;
+}
+.comments .userInfo a:hover{
+    text-decoration: underline;
+}
 .comments .spinner{
     width: 3rem;
     display: block;

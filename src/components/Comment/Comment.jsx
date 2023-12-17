@@ -1,11 +1,11 @@
 import './Comment.css';
 import React,{forwardRef,useState,useEffect} from 'react'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart, faComment, faShare } from "@fortawesome/free-solid-svg-icons";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { likeComment } from '../../api/comments';
-import { LikePost } from '../../Reducers/postInfo';
 import { useDispatch } from 'react-redux';
-const Comment = forwardRef(({userName,message,hasLiked,commentid,postid},ref) => {
+import { Link } from "react-router-dom";
+const Comment = forwardRef(({userName,message,hasLiked,commentid,postid,email},ref) => {
   const dispatch=useDispatch();
   const [liked, setLiked] = useState(hasLiked);
   const handleLike=(e)=>{
@@ -17,10 +17,9 @@ const Comment = forwardRef(({userName,message,hasLiked,commentid,postid},ref) =>
     <div ref={ref} className='comment'>
         <div className="userInfo">
         <div className="userPicName">{userName ? userName.charAt(0).toUpperCase() : ""}</div>
-       <p>
-        
-        {userName}
-        </p> 
+        <Link to={`/profile?email=${email}`} onClick={(e)=>{e.stopPropagation();if(!email){e.preventDefault();}}}>
+       {userName}
+       </Link>
       </div>
       <div className="message">{message}</div>
 
