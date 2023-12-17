@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getComments } from "../../api/comments";
 import { useRef } from "react";
 import spinner from "../../assets/spinner.svg";
+import { setComments } from '../../Reducers/postInfo';
 const Comments = ({ getCommentsData }) => {
   const [data, setData] = useState({ message: "" });
   const [page, setPage] = useState(1);
@@ -19,9 +20,9 @@ const Comments = ({ getCommentsData }) => {
   //pagination
   const observer = useRef();
   const lastelement = useCallback(
-    (element) => {
+     (element) => {
       if (observer.current) observer.current.disconnect();
-      observer.current = new IntersectionObserver((elements) => {
+      observer.current = new IntersectionObserver(async (elements) => {
      
         if (
           elements[0].isIntersecting &&
@@ -29,7 +30,8 @@ const Comments = ({ getCommentsData }) => {
           isNextAvailable
         ) {
          
-          getCommentsData(page + 1);
+          const comment=await getCommentsData(page + 1);
+          dispatch(setComments(comment));
           setPage((page) => page + 1);
         }
       });
@@ -44,7 +46,8 @@ const Comments = ({ getCommentsData }) => {
     //getting comments
     setPage(1);
     if (observer.current) observer.current.disconnect();
-    getCommentsData(1);
+    const comment=await getCommentsData(1);
+    dispatch(setComments(comment));
   };
 
   return (
